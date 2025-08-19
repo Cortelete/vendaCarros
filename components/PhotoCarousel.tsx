@@ -1,16 +1,32 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const images = [
-    "/cruze-frente.png",
-    "/cruze-traseira.png",
-    "/cruze-interior-1.png",
-    "/cruze-interior-2.png",
-];
+// Lista inicial com 15 imagens placeholder, buscando da pasta /public.
+const initialImages = Array.from({ length: 15 }, (_, i) => `/c${i + 1}.png`);
 
 const PhotoCarousel: React.FC = () => {
+    const [images, setImages] = useState(initialImages);
     const [index, setIndex] = useState(0);
+
+    // Garante que o índice atual permaneça válido se as imagens forem removidas
+    useEffect(() => {
+        if (index >= images.length && images.length > 0) {
+            setIndex(images.length - 1);
+        }
+    }, [images, index]);
+
+    const handleImageError = (erroredSrc: string) => {
+        console.warn(`A imagem não pôde ser carregada e foi removida: ${erroredSrc}`);
+        setImages(currentImages => currentImages.filter(src => src !== erroredSrc));
+    };
+
+    if (images.length === 0) {
+        return (
+            <div className="relative w-full aspect-video rounded-2xl shadow-2xl overflow-hidden bg-black/30 flex items-center justify-center">
+                <p className="text-gray-400">Nenhuma imagem disponível.</p>
+            </div>
+        );
+    }
 
     const nextImage = () => {
         setIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -21,28 +37,18 @@ const PhotoCarousel: React.FC = () => {
     };
 
     const variants = {
-        enter: {
-            opacity: 0,
-            scale: 0.8,
-        },
-        center: {
-            zIndex: 1,
-            opacity: 1,
-            scale: 1,
-        },
-        exit: {
-            zIndex: 0,
-            opacity: 0,
-            scale: 1.2,
-        },
+        enter: { opacity: 0, scale: 0.8 },
+        center: { zIndex: 1, opacity: 1, scale: 1 },
+        exit: { zIndex: 0, opacity: 0, scale: 1.2 },
     };
 
     return (
         <div className="relative w-full aspect-video rounded-2xl shadow-2xl overflow-hidden bg-black/30">
             <AnimatePresence initial={false}>
                 <motion.img
-                    key={index}
+                    key={`${index}-${images[index]}`} // Chave única para forçar a re-renderização
                     src={images[index]}
+                    onError={() => handleImageError(images[index])}
                     alt={`Chevrolet Cruze - Imagem ${index + 1}`}
                     className="absolute h-full w-full object-cover"
                     variants={variants}
@@ -63,7 +69,12 @@ const PhotoCarousel: React.FC = () => {
             </button>
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
                 {images.map((_, i) => (
-                    <div key={i} className={`w-2 h-2 rounded-full transition-colors ${i === index ? 'bg-white' : 'bg-white/50'}`} />
+                    <button
+                        key={i}
+                        onClick={() => setIndex(i)}
+                        className={`w-2 h-2 rounded-full transition-colors ${i === index ? 'bg-white' : 'bg-white/50'}`}
+                        aria-label={`Ir para a imagem ${i + 1}`}
+                    />
                 ))}
             </div>
         </div>
