@@ -7,8 +7,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onContactClick }) => {
-    const navItems = ['Home', 'Carros', 'Contato'];
-
     const headerVariants: Variants = {
         hidden: { y: -100, opacity: 0 },
         visible: { 
@@ -26,16 +24,12 @@ const Header: React.FC<HeaderProps> = ({ onContactClick }) => {
             animate="visible"
         >
             <div className="container mx-auto flex justify-between items-center">
-                <div className="text-2xl font-bold tracking-wider bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
-                    Chevrolet Cruze
+                <div className="flex flex-col">
+                    <div className="text-2xl font-bold tracking-wider bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent leading-none">
+                        Chevrolet Cruze
+                    </div>
+                    <span className="text-xs text-gray-400 tracking-wider">Venda Particular</span>
                 </div>
-                <nav className="hidden md:flex items-center space-x-8">
-                    {navItems.map((item) => (
-                        <a key={item} href="#" className="text-gray-300 hover:text-white transition-colors duration-300">
-                            {item}
-                        </a>
-                    ))}
-                </nav>
                 <button 
                     onClick={onContactClick}
                     className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 transform hover:scale-105"

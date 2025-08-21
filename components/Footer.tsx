@@ -47,7 +47,7 @@ const Footer: React.FC<FooterProps> = ({ onDevContactClick }) => {
                     >
                         Desenvolvido por InteligenciArte.IA ✨
                     </a>
-                    <p className="text-xs mt-4">&copy; {new Date().getFullYear()} Venda Particular. Todos os direitos reservados.</p>
+                    <p className="text-xs mt-4">&copy; {new Date().getFullYear()} Anúncio Particular. Todos os direitos reservados.</p>
                 </motion.div>
             </div>
         </footer>

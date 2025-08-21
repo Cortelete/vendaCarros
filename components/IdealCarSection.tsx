@@ -61,7 +61,7 @@ const IdealCarSection: React.FC = () => {
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                 >
-                    Este Chevrolet Cruze LTZ 2018 não é apenas um carro. É o sedan que combina a segurança e o conforto que sua família merece, com a performance que você deseja.
+                    Este Chevrolet Cruze LTZ 2018 não é apenas um carro. É o sedan que combina a segurança e o conforto que sua família merece com a performance que você deseja, em uma negociação direta com o proprietário.
                 </motion.p>
                 <motion.div 
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12"
